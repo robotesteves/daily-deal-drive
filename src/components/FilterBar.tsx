@@ -13,20 +13,6 @@ const FilterBar = () => {
           <div className="flex flex-wrap gap-3 w-full md:w-auto">
             <Select defaultValue="all">
               <SelectTrigger className="w-full md:w-[180px]">
-                <SelectValue placeholder="Body Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="sedan">Sedan</SelectItem>
-                <SelectItem value="suv">SUV</SelectItem>
-                <SelectItem value="truck">Truck</SelectItem>
-                <SelectItem value="coupe">Coupe</SelectItem>
-                <SelectItem value="van">Van</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select defaultValue="all">
-              <SelectTrigger className="w-full md:w-[180px]">
                 <SelectValue placeholder="Price Range" />
               </SelectTrigger>
               <SelectContent>
