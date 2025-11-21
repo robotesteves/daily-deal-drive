@@ -38,18 +38,10 @@ const Hero = () => (
 
 // Filter Bar Component
 const FilterBar = ({ priceRange, onPriceRangeChange, sortBy, onSortChange, totalResults }) => (
-  <div className="bg-white border-y border-gray-200 py-6 px-4 shadow-sm">
+  <div className="py-1">
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <svg className="w-5 h-5 text-blue-900" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
-          </svg>
-          <h2 className="text-lg font-semibold text-gray-900">
-            Filtrar & Ordenar
-            <span className="ml-2 text-sm font-normal text-gray-600">({totalResults} resultados)</span>
-          </h2>
-        </div>
+
         
         <div className="flex flex-wrap gap-3 w-full md:w-auto">
           <Select value={priceRange} onValueChange={onPriceRangeChange}>
@@ -87,9 +79,10 @@ const FilterBar = ({ priceRange, onPriceRangeChange, sortBy, onSortChange, total
 const CarCard = ({ car }) => {
   const basePrice = parseFloat(car.preco_base) || 0;
   const isv = parseFloat(car.isv) || 0;
-  const serviceFee = parseFloat(car.taxa_servico) || 0;
-  const total = basePrice + isv + serviceFee;
-  const finalPrice = parseFloat(car.preco_final) || total;
+  const serviceFee = 2500;
+  const subtotal = isv + serviceFee + basePrice;
+  const finalPrice = parseFloat(car.preco_final) || subtotal;
+  const olxPrice = parseFloat(car.preco_olx) - subtotal 
 
   return (
     <Card className="group overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white">
@@ -109,8 +102,11 @@ const CarCard = ({ car }) => {
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute top-4 right-4 bg-blue-900 text-white px-3 py-1 rounded-full text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Ver Detalhes →
+          <div className="absolute top-4 right-4 bg-blue-900 text-white px-3 py-1.5 rounded-full text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+            Ver Detalhes
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 512 512">
+              <path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/>
+            </svg>
           </div>
         </a>
         
@@ -138,11 +134,11 @@ const CarCard = ({ car }) => {
             </div>
             <div className="bg-gray-50 p-3 rounded-lg">
               <p className="text-gray-500 mb-1 text-xs">Potência</p>
-              <p className="font-semibold text-gray-900">{car.potencia}</p>
+              <p className="font-semibold text-gray-900">{car.potencia}cv</p>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg">
               <p className="text-gray-500 mb-1 text-xs">Cilindrada</p>
-              <p className="font-semibold text-gray-900">{car.cilindrada} ccm</p>
+              <p className="font-semibold text-gray-900">{car.cilindrada}cc</p>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg">
               <p className="text-gray-500 mb-1 text-xs">Ano</p>
@@ -172,13 +168,13 @@ const CarCard = ({ car }) => {
               </div>
               
               <div className="flex justify-between items-center py-1">
-                <span className="text-gray-600">Taxa de Serviço</span>
+                <span className="text-gray-600">Legalização & Transporte (custo médio)</span>
                 <span className="font-bold text-gray-900">{serviceFee.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €</span>
               </div>
               
               <div className="flex justify-between items-center pt-3 border-t-2 border-gray-300 mt-2">
                 <span className="text-gray-700 font-semibold">Subtotal</span>
-                <span className="font-bold text-gray-900">{total.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €</span>
+                <span className="font-bold text-gray-900">{subtotal.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €</span>
               </div>
             </div>
           </div>
@@ -190,10 +186,9 @@ const CarCard = ({ car }) => {
             rel="noopener noreferrer"
             className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-4 rounded-lg flex justify-between items-center hover:from-blue-800 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            <span className="font-bold text-base">Preço Chave na Mão:</span>
-            <span className="font-bold text-2xl">{finalPrice.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €</span>
+            <span className="font-bold text-base">Poupança Total:</span>
+            <span className="font-bold text-2xl">{olxPrice.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €</span>
           </a>
-          <p className="text-xs text-gray-500 mt-2 text-center">Clique para ver mais detalhes e fotos</p>
         </div>
       </div>
     </Card>
@@ -227,20 +222,22 @@ const App = () => {
 
   // Carregar dados do CSV
   useEffect(() => {
-    // Dados de exemplo do JSON fornecido e CSV simulado
-    const csvData = `marca,modelo,versao,ano,quilometros,potencia,cilindrada,preco_base,isv,taxa_servico,preco_final,imagem,link
-BMW,320,d DAB CockPitPro PDC,2022,81192,190 CV (140 kW),1995,17490,3874.88,2450,24498,https://img.classistatic.de/api/v1/mo-prod/images/2d/2d7d2609-0348-48c6-850e-70a49ef74df5?rule=mo-1600.jpg,https://suchen.mobile.de/fahrzeuge/details.html?id=441730156
-Mercedes,C-Class,220d AMG Line,2021,45000,194 CV (143 kW),1950,22000,4200,2450,29850,https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800,#
-Audi,A4,35 TDI S Line,2020,62000,163 CV (120 kW),1968,19500,3600,2450,26750,https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800,#
-Volkswagen,Golf,2.0 TDI GTD,2021,38000,200 CV (147 kW),1968,21000,3900,2450,28550,https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800,#
-Toyota,RAV4,2.5 Hybrid AWD,2022,25000,218 CV (160 kW),2487,28000,2100,2450,33750,https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800,#
-Porsche,Macan,S 3.0 V6,2021,32000,354 CV (260 kW),2995,48000,8500,2450,60950,https://images.unsplash.com/photo-1611859266238-4b98091d9d9b?w=800,#`;
+  const loadCSV = async () => {
+    try {
+      const res = await fetch('/cars.csv');  // caminho real
+      const text = await res.text();
+      const parsed = parseCSV(text);
 
-    const parsedCars = parseCSV(csvData);
-    setCars(parsedCars);
-    setFilteredCars(parsedCars);
-    setLoading(false);
-  }, []);
+      setCars(parsed);
+      setFilteredCars(parsed);
+      setLoading(false);
+    } catch (err) {
+      console.error('Erro ao carregar CSV:', err);
+    }
+  };
+
+  loadCSV();
+}, []);
 
   // Filtrar e ordenar carros
   useEffect(() => {
@@ -292,13 +289,7 @@ Porsche,Macan,S 3.0 V6,2021,32000,354 CV (260 kW),2995,48000,8500,2450,60950,htt
   return (
     <div className="min-h-screen bg-gray-50">
       <Hero />
-      <FilterBar 
-        priceRange={priceRange}
-        onPriceRangeChange={setPriceRange}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        totalResults={filteredCars.length}
-      />
+
       
       <main className="max-w-7xl mx-auto px-4 py-12">
         <div className="mb-8">
@@ -319,7 +310,13 @@ Porsche,Macan,S 3.0 V6,2021,32000,354 CV (260 kW),2995,48000,8500,2450,60950,htt
             </div>
           </div>
         </div>
-
+      <FilterBar 
+        priceRange={priceRange}
+        onPriceRangeChange={setPriceRange}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        totalResults={filteredCars.length}
+      />
         {filteredCars.length > 0 ? (
           <div className="space-y-6">
             {filteredCars.map((car, index) => (
