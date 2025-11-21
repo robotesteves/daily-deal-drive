@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-
 interface CarCardProps {
   image: string;
   year: number;
@@ -13,7 +12,6 @@ interface CarCardProps {
   transmission: string;
   fuelType: string;
 }
-
 const CarCard = ({
   image,
   year,
@@ -24,7 +22,7 @@ const CarCard = ({
   originalPrice,
   mileage,
   transmission,
-  fuelType,
+  fuelType
 }: CarCardProps) => {
   const basePrice = 17490;
   const isv = 545;
@@ -32,17 +30,11 @@ const CarCard = ({
   const ivaOnService = 564;
   const total = basePrice + isv + serviceFee + ivaOnService;
   const finalPrice = 21049;
-
-  return (
-    <Card className="group overflow-hidden border-border hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 bg-card">
+  return <Card className="group overflow-hidden border-border hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 bg-card">
       <div className="grid md:grid-cols-[380px,1fr] gap-0">
         {/* Image Section */}
         <div className="relative overflow-hidden bg-muted">
-          <img
-            src={image}
-            alt={`${year} ${make} ${model}`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
+          <img src={image} alt={`${year} ${make} ${model}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
         </div>
         
         {/* Details Section */}
@@ -93,10 +85,7 @@ const CarCard = ({
                 <span className="font-bold text-card-foreground">{serviceFee.toLocaleString()} €</span>
               </div>
               
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">IVA (da taxa de serviço)</span>
-                <span className="font-bold text-card-foreground">{ivaOnService.toLocaleString()} €</span>
-              </div>
+              
               
               <div className="flex justify-between items-center pt-2 border-t border-border">
                 <span className="text-muted-foreground font-semibold">Total</span>
@@ -112,8 +101,6 @@ const CarCard = ({
           </div>
         </div>
       </div>
-    </Card>
-  );
+    </Card>;
 };
-
 export default CarCard;
