@@ -1,15 +1,13 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
 const FilterBar = () => {
-  return (
-    <div className="bg-card border-y border-border py-6 px-4">
+  return <div className="bg-card border-y border-border py-6 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
             </svg>
-            <h2 className="text-lg font-semibold text-card-foreground">Filter & Sort</h2>
+            <h2 className="text-lg font-semibold text-card-foreground">Filtrar &amp; Ordenar </h2>
           </div>
           
           <div className="flex flex-wrap gap-3 w-full md:w-auto">
@@ -55,8 +53,6 @@ const FilterBar = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default FilterBar;
