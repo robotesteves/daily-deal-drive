@@ -92,14 +92,19 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 py-12">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-foreground mb-2">
-            Today's Featured Deals
+            Ofertas em Destaque
           </h2>
-          <p className="text-muted-foreground">
-            {deals.length} incredible deals available • Updated daily
+          <p className="text-muted-foreground mb-4">
+            {deals.length} ofertas incríveis disponíveis • Atualizadas diariamente
           </p>
+          <div className="bg-accent/10 border-l-4 border-accent p-4 rounded">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-accent font-semibold">Nota:</strong> Selecionamos apenas os stands mais reputados para garantir a qualidade e confiança em cada negócio.
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-6">
           {deals.map((car, index) => (
             <CarCard key={index} {...car} />
           ))}
@@ -108,8 +113,8 @@ const Index = () => {
 
       <footer className="bg-card border-t border-border mt-16 py-8">
         <div className="max-w-7xl mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 Best Car Deals. All rights reserved.</p>
-          <p className="text-sm mt-2">Deals updated daily • Free vehicle history reports • 30-day warranty included</p>
+          <p>© 2024 K'importa. Todos os direitos reservados.</p>
+          <p className="text-sm mt-2">Ofertas atualizadas diariamente • Relatórios de histórico gratuitos • Garantia de 30 dias incluída</p>
         </div>
       </footer>
     </div>

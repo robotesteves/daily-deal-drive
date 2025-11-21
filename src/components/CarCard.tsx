@@ -26,69 +26,92 @@ const CarCard = ({
   transmission,
   fuelType,
 }: CarCardProps) => {
-  const savings = originalPrice - price;
-  const savingsPercent = Math.round((savings / originalPrice) * 100);
+  const basePrice = 17490;
+  const isv = 545;
+  const serviceFee = 2450;
+  const ivaOnService = 564;
+  const total = basePrice + isv + serviceFee + ivaOnService;
+  const finalPrice = 21049;
 
   return (
     <Card className="group overflow-hidden border-border hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 bg-card">
-      <div className="relative overflow-hidden aspect-[4/3]">
-        <img
-          src={image}
-          alt={`${year} ${make} ${model}`}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        <Badge className="absolute top-4 right-4 bg-savings text-savings-foreground font-bold px-3 py-1.5 text-base shadow-lg">
-          Save ${savings.toLocaleString()}
-        </Badge>
+      <div className="grid md:grid-cols-[380px,1fr] gap-0">
+        {/* Image Section */}
+        <div className="relative overflow-hidden bg-muted">
+          <img
+            src={image}
+            alt={`${year} ${make} ${model}`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        
+        {/* Details Section */}
+        <div className="p-6 flex flex-col">
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-card-foreground uppercase mb-1">
+              {make} {model} {trim}
+            </h3>
+          </div>
+
+          {/* Specs Row */}
+          <div className="grid grid-cols-4 gap-4 mb-6 text-sm">
+            <div>
+              <p className="text-muted-foreground mb-1">Quilómetros</p>
+              <p className="font-semibold text-card-foreground">{mileage.toLocaleString()} km</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground mb-1">Potência</p>
+              <p className="font-semibold text-card-foreground">163 CV (120 kW) CV</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground mb-1">Cilindrada</p>
+              <p className="font-semibold text-card-foreground">1332 ccm</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground mb-1">Ano</p>
+              <p className="font-semibold text-card-foreground">{year < 2000 ? `0${year}` : year}</p>
+            </div>
+          </div>
+
+          {/* Pricing Breakdown */}
+          <div className="bg-muted/30 p-4 rounded-lg mb-4">
+            <h4 className="font-bold text-card-foreground mb-3">Resultado da Simulação</h4>
+            
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Valor da Viatura</span>
+                <span className="font-bold text-card-foreground">{basePrice.toLocaleString()} €</span>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">ISV</span>
+                <span className="font-bold text-card-foreground">{isv.toLocaleString()} €</span>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Taxa de serviço</span>
+                <span className="font-bold text-card-foreground">{serviceFee.toLocaleString()} €</span>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">IVA (da taxa de serviço)</span>
+                <span className="font-bold text-card-foreground">{ivaOnService.toLocaleString()} €</span>
+              </div>
+              
+              <div className="flex justify-between items-center pt-2 border-t border-border">
+                <span className="text-muted-foreground font-semibold">Total</span>
+                <span className="font-bold text-card-foreground">{total.toLocaleString()} €</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Final Price */}
+          <div className="bg-foreground text-background p-4 rounded-lg flex justify-between items-center">
+            <span className="font-bold text-base">Preço Chave na Mão:</span>
+            <span className="font-bold text-2xl">{finalPrice.toLocaleString()} €</span>
+          </div>
+        </div>
       </div>
-      
-      <CardContent className="p-6">
-        <div className="mb-4">
-          <h3 className="text-xl font-bold text-card-foreground mb-1">
-            {year} {make} {model}
-          </h3>
-          {trim && (
-            <p className="text-muted-foreground text-sm">{trim}</p>
-          )}
-        </div>
-
-        <div className="flex items-end gap-3 mb-4">
-          <div>
-            <p className="text-3xl font-bold text-primary">
-              ${price.toLocaleString()}
-            </p>
-          </div>
-          <div className="pb-1">
-            <p className="text-muted-foreground line-through text-sm">
-              ${originalPrice.toLocaleString()}
-            </p>
-            <p className="text-savings font-semibold text-sm">
-              {savingsPercent}% off
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
-          <div>
-            <p className="text-xs text-muted-foreground mb-1">Mileage</p>
-            <p className="text-sm font-semibold text-card-foreground">
-              {mileage.toLocaleString()} mi
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground mb-1">Transmission</p>
-            <p className="text-sm font-semibold text-card-foreground">{transmission}</p>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground mb-1">Fuel Type</p>
-            <p className="text-sm font-semibold text-card-foreground">{fuelType}</p>
-          </div>
-        </div>
-
-        <button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-2.5 px-4 rounded-lg transition-colors">
-          View Details
-        </button>
-      </CardContent>
     </Card>
   );
 };
