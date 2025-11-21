@@ -1,12 +1,9 @@
 import heroImage from "@/assets/hero-cars.jpg";
-
 const Hero = () => {
-  return (
-    <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+  return <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-cover bg-center" style={{
+      backgroundImage: `url(${heroImage})`
+    }}>
         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/60" />
       </div>
       
@@ -15,7 +12,7 @@ const Hero = () => {
           K'importa
         </h1>
         <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8">
-          As melhores ofertas de viaturas usadas
+          O site que importa para quem importa                              
         </p>
         <div className="flex items-center justify-center gap-3 text-primary-foreground/95">
           <div className="flex items-center gap-2">
@@ -38,8 +35,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
